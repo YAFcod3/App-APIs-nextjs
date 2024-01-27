@@ -5,9 +5,12 @@ import { ApiResponse, Character } from "../intrefaces/data-ricky";
 import Header from "../components/ricky-morty/Header";
 import Item from "../components/ricky-morty/Item";
 import Pagination from "../components/ricky-morty/Pagination";
-
+import Search from '../components/ricky-morty/Search'
 
 const RickyAndMorty = () => {
+
+
+
   const baseUrl = "https://rickandmortyapi.com/api";
 
   //ROUTER INITIALIZATION
@@ -71,23 +74,28 @@ const RickyAndMorty = () => {
 
       <div
         id="ricky-morty"
-        className=" pt-20 bg-gray-800 flex flex-col justify-center items-center 	"
+        className=" pt-20 bg-gray-800 flex flex-col justify-center items-center min-h-screen 	"
       >
+        <Search setResults={setResults} setTotalPage={setTotalPage}/>
         {isloading && <h2 className=" text-4xl text-center">Cargando...</h2>}
-        <div className="grid grid-cols-1  xl:grid-cols-2 gap-8 ">
+
+        {results.length !== 0 && (
+          <>
+          <div className="grid grid-cols-1  xl:grid-cols-2 gap-8 ">
           {results?.map((result) => (
             <Item key={result.id} result={result} />
           ))}
           {/* {JSON.stringify(results)} */}
         </div>
-      </div>
-      {/* pagination */}
-      {results.length !==0 && (
+
         <Pagination
           handlePageChange={handlePageChange}
           currentPage={currentPage}
+          totalPage={totalPage}
         />
-      )}
+          </>
+        )}
+      </div>
     </>
   );
 };
